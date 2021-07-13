@@ -2,6 +2,10 @@
 !.gitignore
 !.gitattributes
 !js
+js/*
+!js/functions.js
+!js/atoi.js
 !index.html
-!main.css
-!package-lock.json
+!atoi.css
+!fdg.css
+!toggle.css

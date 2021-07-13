@@ -1,0 +1,148 @@
+.switch {
+  position: relative;
+  bottom:10px;
+  display: inline-block;
+  width: 80px;
+  height: 25px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: solid #ffffff 2px;
+}
+
+.moon{
+  z-index:99;
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 61px;
+  bottom: 6px;
+  background:radial-gradient(circle at 80% 30%,transparent 39%,white 44%);
+}
+
+input:checked ~ .moon{
+  opacity:0%;
+}
+
+.slider:before{
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #ffffff;
+  transition: .4s;
+  -webkit-transition: .4s;
+  -moz-transition:.4s;
+  -ms-transition:.4s;
+  -o-transition:.4s;
+}
+
+input ~ .slider {
+  background-color:#181a1b
+}
+
+input:checked ~ .slider {
+  background-color: #181a1b;
+}
+
+input:checked ~ .slider:before {
+  -webkit-transform: translateX(55px);
+  -moz-transform: translateX(55px);
+  -ms-transform: translateX(55px);
+  -o-transform:translateX(55px);
+  transform: translateX(55px);
+}
+
+/* Rounded sliders */
+.slider.round, .moon {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+/*spinner*/
+.loader {
+position:absolute;
+display:inline-block;
+bottom:-10px;
+left:-50px;
+font-size: 10px;
+margin: 0px auto;
+text-indent: -9999em;
+width: 3em;
+height: 3em;
+border-radius: 50%;
+background: var(--fg);
+/*background: -moz-linear-gradient(left, var(--fg) 10%, rgba(255, 255, 255, 0) 42%);
+background: -webkit-linear-gradient(left, var(--fg) 10%, rgba(255, 255, 255, 0) 42%);
+background: -o-linear-gradient(left, var(--fg) 10%, rgba(255, 255, 255, 0) 42%);
+background: -ms-linear-gradient(left, var(--fg) 10%, rgba(255, 255, 255, 0) 42%);*/
+background: linear-gradient(to right, var(--fg) 50%, var(--bg) 50%);
+position: relative;
+-webkit-animation: load3 0.9s infinite linear;
+animation: load3 0.9s infinite linear(0.46, 0.03, 0.52, 0.96);
+-webkit-transform: translateZ(0);
+-ms-transform: translateZ(0);
+transform: translateZ(0);
+}
+.loader:before {
+width: 50%;
+height: 50%;
+background: var(--fg);
+border-radius: 100% 0 0 0;
+position: absolute;
+top: 0;
+left: 0;
+content: '';
+}
+.loader:after {
+background: var(--bg);
+width: 75%;
+height: 75%;
+border-radius: 50%;
+content: '';
+margin: auto;
+position: absolute;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+}
+@-webkit-keyframes load3 {
+0% {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+100% {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+}
+@keyframes load3 {
+0% {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+100% {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+}

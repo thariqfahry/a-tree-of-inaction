@@ -1,0 +1,35 @@
+circle {
+    fill: none;
+    stroke : none;
+    stroke-width: 0.5px;
+    opacity: 0.8;
+    visibility: hidden;
+}
+
+line {
+    stroke: var(--line);
+    stroke-width : 2px;
+}
+
+text {
+    text-anchor: middle;
+    alignment-baseline: middle;
+    fill: var(--nxtext);
+    font-size: 12px;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+     user-select: none; /* Non-prefixed version, currently
+                        supported by Chrome, Edge, Opera and Firefox */
+}
+
+text.expandable{
+    fill: var(--xtext);
+}
+
+text.expandable:hover{
+     text-decoration: underline;
+}
