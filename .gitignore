@@ -5,6 +5,11 @@
 js/*
 !js/functions.js
 !js/atoi.js
+!backend
+backend/*
+!backend/main.py
+!backend/scrapers.py
+!backend/requirements.txt
 !index.html
 !atoi.css
 !fdg.css
