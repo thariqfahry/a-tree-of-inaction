@@ -40,6 +40,9 @@ document.onkeydown = function (e) {
 }
 
 function buttonClicked(){
+    if (document.querySelector("input#urlinput").value == ''){
+        document.querySelector("input#urlinput").value = 'currentintissues.carrd.co'}
+        
     var base_url = validate(document.querySelector("input#urlinput").value)
     if (base_url.success){
         var params = generateparams(base_url.href);
