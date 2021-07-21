@@ -12,6 +12,7 @@ backend/*
 !backend/requirements.txt
 !index.html
 !atoi.css
+!atoi_mobile.css
 !fdg.css
 !toggle.css
 !favicon.png

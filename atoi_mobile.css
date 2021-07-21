@@ -31,6 +31,7 @@ font-family: "Roboto Mono";
   -o-transition:.4s;
 }
 
+
 .preload *, .preload, .notransition, .notransition *{
   transition:none !important;
   -webkit-transition: none !important;
@@ -65,8 +66,8 @@ height:100%;
 
 div#outer{
   position:absolute;
-  top:230px;
-  left:150px;
+  top:15%;
+  left:10%;
 }
 
 div#titles{
@@ -83,28 +84,32 @@ h1, h2, h3, h4{
 }
 
 h1#maintitle{
-  font-size: 80px;
+  font-size: 12vw;
   font-weight:600;
 
 }
 
 h2#subtitle{
-  font-size: 20px;
+  font-size: 5vw;
   font-weight:550;
+
+  margin-right:10vw;
 }
 
 h3#prompt{
-  font-size: 24px;
+  font-size: 5vw;
   font-weight:550;
   display:inline-block;
 }
 
 h4#supported{
-  font-size: 15px;
+  font-size: 3vw;
   font-weight:550;
+
+  margin-right:10vw;
   position:relative;
   top:8px;
-  left:188px;
+  left:auto;
 }
 
 #supported.error{
@@ -120,10 +125,10 @@ width:100%;
 }
 
 input[type=text] {
-  font-size: 24px;
-  width: 60%;
+  font-size: 5vw;
+  width: 75%;
   padding: 9px 0px;
-  margin: 0px 5px;
+  margin: 0px 0px;
   box-sizing: border-box;
 
   outline: 0;
@@ -134,7 +139,6 @@ input[type=text] {
   outline: none;
 
   display: inline-block;
-
   -webkit-appearance: none;
 }
 
@@ -142,19 +146,18 @@ input[type=button] {
   position:relative;
   bottom:0px;
 
-  height:50px;
-  width:50px;
+  height:10vw;
+  width:10vw;
 
   background-color: var(--bg);
   border:none;
 
-  font-size:25px;
+  font-size:5vw;
   font-weight:900;
   padding-bottom:7px;
   text-decoration: none;
 
   cursor: pointer;
-
   -webkit-appearance: none;
   
 }
@@ -202,16 +205,14 @@ color: var(--mg);
 }
 
 :-webkit-autofill::first-line {
-font-size: 24px;
+font-size: 5vw;
 font-family:"Roboto Mono";
 }
 
-
 div.tutorial{
-  position:absolute;
   text-align: center;
   font-size: 12px;
-  
+  position:absolute;
   left:50%;
   transform: translateX(-50%);
 }

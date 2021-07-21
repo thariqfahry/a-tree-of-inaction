@@ -1,9 +1,6 @@
 "use strict";
-const width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-const height = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-
-//document.querySelector("svg").setAttribute("width", width)
-//document.querySelector("svg").setAttribute("height", height)
+function width() {return Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)}
+function height() {return Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)}
 
 var svg = d3.select("svg");
 
@@ -89,19 +86,21 @@ function graphcb(_data) {
     links = []
     urls = nodes.map(function(d){return d.data.url})
 
-    arrangeNodes(nodes, arrangeRadius, width/2, height/2)
+    arrangeNodes(nodes, arrangeRadius, width()/2, height()/2)
 
     simulation = d3.forceSimulation(nodes)
     .force('charge', d3.forceManyBody().strength(-200))
     .force('link', d3.forceLink(links).id(d => d.id).distance(30).strength(0.3))
     //.force('center', d3.forceCenter(width / 2, height / 2).strength(0.01))
-    .force("x", d3.forceX(width/2))
-    .force("y", d3.forceY(height/2))
+    .force("x", d3.forceX(width()/2))
+    .force("y", d3.forceY(height()/2))
     .force('collision', d3.forceCollide().radius(collisionRadius))
     .on('tick', ticked);
     restart();
 
     d3.timeout(addInitial,75);
+
+    $(window).on('resize', restart);
 }
 
 //update the simulation and do data joins
@@ -141,8 +140,11 @@ function restart() {
 
     text.exit().remove()
 
-    simulation.nodes(nodes);
-    simulation.force("link").links(links);
+    simulation.nodes(nodes)
+    .force("link").links(links)
+    simulation
+    .force("x", d3.forceX(width()/2))
+    .force("y", d3.forceY(height()/2))
     simulation.alpha(1).restart();
 }
 
