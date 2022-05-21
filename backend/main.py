@@ -1,8 +1,7 @@
+import traceback
 from flask import jsonify
 from flask_cors import cross_origin
-
 from scrapers import choose_scraper_function
-
 
 class Node:
     __slots__ = ['url', 'name', 'visit_order', 'expandable', 'children']
@@ -13,7 +12,7 @@ class Node:
         self.visit_order = None
         self.expandable = bool(choose_scraper_function(self.url))
 
-        if children == None:
+        if children is None:
             self.children = []
         else:
             assert type(children) == list
@@ -51,7 +50,7 @@ class Session:
         if scraper_function:
             links, title = scraper_function(url)
 
-            #remove links to self
+            # remove links to self
             links = [tup for tup in links if tup[0]!= url]
 
             # Sorts by if URL is scrapable or not
@@ -60,7 +59,7 @@ class Session:
                               choose_scraper_function(item[0])),
                           reverse=True), title  # item is a tuple (url,name).
             
-        #if not scrapable
+        # if not scrapable
         return [], None
     
     def __repr__(self):
@@ -88,18 +87,18 @@ class Session:
             links = links[:max_width]
             self.base = Node(url=base_url, name=title)
             self.base.children = [Node(url=tup[0], name=tup[1])
-                             for tup in links]
+                                  for tup in links]
 
         except Exception as e:
             self.status = 'failed : uncaught exception raised'
-            self.exceptions.append(str(e))
+            self.exceptions.append(traceback.format_exc())
         else:
             self.status = 'success: page scraped'
             self.success = True
 
         if self.base is not None:
             self.tree = self.base.json_serializable
-        
+
         self.return_val = {'success'    :self.success,
                            'status'     :self.status,
                            'tree'       :self.tree,
@@ -123,7 +122,7 @@ def trigger(request):
             
             url = request_json['url']
             width = int(request_json['width'])
-
+            
             session = Session(base_url=url, max_width=width)
             return_val = session.return_val
             
@@ -131,8 +130,7 @@ def trigger(request):
 
     except Exception as e:
         return_val['status'] = 'failed: uncaught exception raised in Cloud Function',
-        return_val['exceptions'] = [str(e)]
-
+        return_val['exceptions'] = [traceback.format_exc()]
         print(request.get_data(), return_val['status'],' ',return_val['exceptions'])
 
     return jsonify(return_val)

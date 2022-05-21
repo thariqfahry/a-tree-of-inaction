@@ -1,7 +1,8 @@
-import requests
-from urllib.parse import urlparse
-from bs4 import BeautifulSoup, SoupStrainer
 from collections import Counter
+from urllib.parse import urlparse
+import requests_html_2 as requests_html
+from bs4 import BeautifulSoup, SoupStrainer
+import globalvars
 
 headers = {
     'Access-Control-Allow-Origin': '*',
@@ -46,16 +47,18 @@ def normalize(links):
     return links
 
 
-'''
-Linktree: we know exactly where the links are: they're in a StyledContainer.
-'''
-
-
 def scrape_linktree_links(url):
-    page = requests.get(url, headers)
+    '''
+    Linktree: we know exactly where the links are: they're in a StyledContainer.
+    '''
+    if not globalvars.HTMLSession:
+        globalvars.HTMLSession = requests_html.HTMLSession()
+        print("New HTML session created.")
+    page = globalvars.HTMLSession.get(url, headers = headers)
     page.raise_for_status()
+    page.html.render()
 
-    soup = BeautifulSoup(page.content, features='html.parser')
+    soup = BeautifulSoup(page.html.raw_html.decode(), features='html.parser')
 
     # Get a list of (url,name) tuples for the links in all the StyledContainers in the linktree page.
     links = [(element.a.get('href'), element.a.p.contents[0])
@@ -64,17 +67,19 @@ def scrape_linktree_links(url):
 
     links = [tup for tup in links if not tup[0].startswith(url)]
 
-    return normalize(links), BeautifulSoup(page.content, features='html.parser').title.contents[0]
-
-
-'''
-Carrd: sometimes in <a href=url>name<a>, sometimes in <span>s.
-'''
+    return normalize(links), soup.title.contents[0]
 
 
 def scrape_carrd_links(url):
+    '''
+    Carrd: sometimes in <a href=url>name<a>, sometimes in <span>s.
+    '''
 
-    page = requests.get(url, headers)
+    if not globalvars.HTMLSession:
+        globalvars.HTMLSession = requests_html.HTMLSession()
+        print("New HTML session created.")
+
+    page = globalvars.HTMLSession.get(url, headers = headers)
     page.raise_for_status()
 
     soup = BeautifulSoup(page.content,
@@ -92,4 +97,5 @@ def scrape_carrd_links(url):
     links = [tup for tup in links if not tup[0].startswith(url)
              and not tup[0] == 'https://carrd.co']
 
+    # Reparse because we used a SoupStrainer previously, that won't have the title
     return normalize(links), BeautifulSoup(page.content, features='html.parser').title.contents[0]

@@ -8,8 +8,10 @@ js/*
 !backend
 backend/*
 !backend/main.py
-!backend/scrapers.py
 !backend/requirements.txt
+!backend/scrapers.py
+!backend/globalvars.py
+!backend/requests_html_2.py
 !index.html
 !atoi.css
 !atoi_mobile.css
