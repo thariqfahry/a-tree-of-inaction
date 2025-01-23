@@ -50,7 +50,7 @@ function generateparams(url) {
     }
 
     var ajax_args = {
-        url: 'https://europe-west1-booming-being-277711.cloudfunctions.net/function-1',
+        url: 'https://atoi-backend-980032900133.europe-west2.run.app',
         data: JSON.stringify(cf_args),
         contentType: "application/json charset=utf-8"
     }
