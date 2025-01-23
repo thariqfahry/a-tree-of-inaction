@@ -1,7 +1,9 @@
 from collections import Counter
 from urllib.parse import urlparse
-import requests_html_2 as requests_html
+
 from bs4 import BeautifulSoup, SoupStrainer
+import requests_html
+
 import globalvars
 
 headers = {

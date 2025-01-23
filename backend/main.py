@@ -1,7 +1,12 @@
 import traceback
-from flask import jsonify
-from flask_cors import cross_origin
+
+from flask import Flask, app, jsonify, request
+from flask_cors import CORS
+
 from scrapers import choose_scraper_function
+
+app = Flask(__name__)
+CORS(app)
 
 class Node:
     __slots__ = ['url', 'name', 'visit_order', 'expandable', 'children']
@@ -58,17 +63,17 @@ class Session:
                           key=lambda item: bool(
                               choose_scraper_function(item[0])),
                           reverse=True), title  # item is a tuple (url,name).
-            
+
         # if not scrapable
         return [], None
-    
+
     def __repr__(self):
         return f'Session [{self.base_url}], {self.return_val["status"]}'
 
     def __init__(self, base_url, max_width=20):
         if max_width < 0:
             max_width = 999
-        
+
         self.base, self.exceptions = None, []
         self.base_url = base_url
         self.status = 'failed: did not run'
@@ -92,6 +97,7 @@ class Session:
         except Exception as e:
             self.status = 'failed : uncaught exception raised'
             self.exceptions.append(traceback.format_exc())
+            traceback.print_exc()
         else:
             self.status = 'success: page scraped'
             self.success = True
@@ -106,9 +112,8 @@ class Session:
                            }
 
 
-@cross_origin(allow_headers=['Content-Type'])
-def trigger(request):
-    
+@app.route('/', methods=['POST'])
+def trigger():
     return_val = {
         'success'       : False,
         'status'        : 'failed: invalid request',
@@ -119,13 +124,13 @@ def trigger(request):
         request_json = request.json
 
         if request_json and 'url' in request_json and 'width' in request_json:
-            
+
             url = request_json['url']
             width = int(request_json['width'])
-            
+
             session = Session(base_url=url, max_width=width)
             return_val = session.return_val
-            
+
             print(request_json['url'],' ',return_val['status'],' ',return_val['exceptions'])
 
     except Exception as e:
