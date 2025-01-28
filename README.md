@@ -1,10 +1,8 @@
 # A Tree of Inaction
 
+How many aggregators link to other aggregators?
+
 https://thariqfahry.github.io/a-tree-of-inaction
-
-This project started out as a criticism of people making compilations of 'educate yourself' links - I noticed that many of them linked to each other, and did nothing towards solving the issues they linked to (à la Change.org petitions). I thought it'd be a technically cool bit of social commentary to build a web scraper that drew a network graph of connections between those compilations.
-
-My opinions have since changed - the project is no longer meant as a criticism, but as an exploration.
 
 <div align="left">
       <a href="https://thariqfahry.github.io/a-tree-of-inaction">
@@ -12,7 +10,8 @@ My opinions have since changed - the project is no longer meant as a criticism, 
       </a>
 </div>
 
-## Building
-The 'backend' currently runs on Python 3.9 inside Cloud Functions. It is necessary to have a backend since client-side web scraping is not possible due to CORS.
-
-The JS is vanilla, and can be directly run on a host such as Live Server.
+## Building the backend container image
+A backend is required because the same-origin policy prevents client-side web scraping.  
+```
+docker build -t atoi-backend ./backend
+```
